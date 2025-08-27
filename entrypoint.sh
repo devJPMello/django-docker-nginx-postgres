@@ -1,8 +1,6 @@
-#!/bin/sh
 set -e
 
 echo "Waiting for database..."
-# Aguardar o banco estar pronto
 while ! nc -z db 5432; do
   echo "Database is not ready yet. Waiting..."
   sleep 2

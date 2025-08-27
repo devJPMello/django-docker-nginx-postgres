@@ -28,7 +28,6 @@ def upload_view(request):
     else:
         form = UploadForm()
     
-    # Busca e paginação
     search_query = request.GET.get('search', '')
     if search_query:
         files = UploadedFile.objects.filter(
@@ -39,7 +38,6 @@ def upload_view(request):
     else:
         files = UploadedFile.objects.all().order_by('-uploaded_at')
     
-    # Paginação - 10 arquivos por página
     paginator = Paginator(files, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

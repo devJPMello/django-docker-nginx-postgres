@@ -28,11 +28,9 @@ class UploadForm(forms.ModelForm):
     def clean_file(self):
         file = self.cleaned_data.get('file')
         if file:
-            # Verificar tamanho do arquivo (100MB)
             if file.size > 100 * 1024 * 1024:
                 raise ValidationError('O arquivo não pode ser maior que 100MB.')
             
-            # Verificar extensão
             allowed_extensions = UploadedFile.ALLOWED_EXTENSIONS
             file_extension = os.path.splitext(file.name)[1][1:].lower()
             
@@ -41,8 +39,7 @@ class UploadForm(forms.ModelForm):
                     f'Extensão de arquivo não permitida. '
                     f'Extensões permitidas: {", ".join(allowed_extensions).upper()}'
                 )
-            
-            # Verificar se o arquivo não está vazio
+
             if file.size == 0:
                 raise ValidationError('O arquivo não pode estar vazio.')
         

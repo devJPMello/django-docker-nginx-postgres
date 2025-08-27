@@ -43,7 +43,6 @@ DATABASES = {
     }
 }
 
-# Configurações de segurança
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
@@ -51,17 +50,16 @@ SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
-# Configurações de sessão
-SESSION_COOKIE_SECURE = False  # True em produção com HTTPS
+
+SESSION_COOKIE_SECURE = False  
 SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_AGE = 3600  # 1 hora
+SESSION_COOKIE_AGE = 3600  
 
 LANGUAGE_CODE = "pt-br"
 TIME_ZONE = "America/Sao_Paulo"
 USE_I18N = True
 USE_TZ = True
 
-# Configurações de arquivos estáticos e mídia
 STATIC_URL = "/static/"
 STATIC_ROOT = "/vol/static"
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
@@ -69,10 +67,9 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = "/vol/media"
 
-# Configurações de upload
-FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760  
 FILE_UPLOAD_TEMP_DIR = None
-DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10MB
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760  
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 1000
 
 TEMPLATES = [
@@ -91,7 +88,6 @@ TEMPLATES = [
     },
 ]
 
-# Configurações de logging
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

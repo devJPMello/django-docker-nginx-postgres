@@ -394,7 +394,6 @@
         </div>
         
         <div class="content">
-            <!-- Mensagens -->
             {% if messages %}
             <div class="messages">
                 {% for message in messages %}
@@ -437,7 +436,6 @@
                 </form>
             </div>
             
-            <!-- Busca -->
             <div class="search-section">
                 <form method="get" class="search-form">
                     <input type="text" name="search" value="{{ search_query }}" 
@@ -473,7 +471,6 @@
                         </div>
                     {% endfor %}
                     
-                    <!-- Paginação -->
                     {% if files.has_other_pages %}
                     <div class="pagination">
                         {% if files.has_previous %}
@@ -507,7 +504,6 @@
     </div>
 
     <script>
-        // Habilitar/desabilitar botão baseado na seleção de arquivo
         const fileInput = document.querySelector('input[type="file"]');
         const submitBtn = document.getElementById('submitBtn');
         
@@ -520,7 +516,6 @@
             }
         });
         
-        // Drag and drop visual feedback
         const uploadSection = document.getElementById('uploadSection');
         
         ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -548,14 +543,12 @@
             uploadSection.classList.remove('drag-over');
         }
         
-        // Feedback visual ao enviar
         const form = document.querySelector('form');
         form.addEventListener('submit', function() {
             submitBtn.disabled = true;
             submitBtn.textContent = '⏳ Enviando...';
         });
         
-        // Auto-hide messages after 5 seconds
         setTimeout(function() {
             const messages = document.querySelectorAll('.message');
             messages.forEach(function(message) {
