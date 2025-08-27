@@ -1,0 +1,70 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: django_postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-mydb}
+      POSTGRES_USER: ${POSTGRES_USER:-myuser}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mypassword}
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-myuser}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
+    networks:
+      - django_network
+
+  web:
+    build: .
+    container_name: django_app
+    env_file: .env
+    command: ["/bin/sh", "/entrypoint.sh"]
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - static_volume:/vol/static
+      - media_volume:/vol/media
+      - ./app:/app
+      - ./templates:/templates
+    expose:
+      - "8000"
+    restart: unless-stopped
+    networks:
+      - django_network
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    container_name: django_nginx
+    depends_on:
+      - web
+    ports:
+      - "80:80"
+    volumes:
+      - static_volume:/vol/static:ro
+      - media_volume:/vol/media:ro
+    restart: unless-stopped
+    networks:
+      - django_network
+
+volumes:
+  postgres_data:
+    driver: local
+  static_volume:
+    driver: local
+  media_volume:
+    driver: local
+
+networks:
+  django_network:
+    driver: bridge
